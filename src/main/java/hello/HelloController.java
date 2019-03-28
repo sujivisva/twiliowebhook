@@ -45,7 +45,7 @@ public class HelloController {
 	@RequestMapping(value="/postcheck", method=RequestMethod.POST)
 	public void postcheck(@RequestBody String twilioBody, @RequestHeader HttpHeaders headers) 
 	{
-		String authToken ="3elVI_I99HW-HeOmboYw_WdZ8dVKspF6dFiL0ehZHkXzBw7BeUnAfe5TKZw6r-7pnGERjBZgYspiEDdBylo9vOYNXn_8bsQptX6MiSnsilJqrMDtK2PQ1RE3d_OoM66GO67f_wZoTfz1WqoDQp6b75m7H30S49ETMp0vOxPn195irLcsdVqav8T14Fz8p_mjlNLCrvStpEKOl0sN0P1fV4eQWT5BrI8Gnh_b9gRHtDscI7rhYpF0seRMpg898tXrPiIXrtOEyrtokjxEGvF5tlKSiaQHL1NgEPbies8IbJ32WV0bnumFVsJxFtLMQgtIZTpt0UGINuhQA21KJhMofPv4-Hftvoi41JoLVO_IrPfyxa5ZHfV06qiE9UWfoYScepHkG1zdkD1jGxAlSp6AEvKx-3GJ9tUJyMxZx6VajWQOyyKqkN5cVhZ-otxGsVmF4CrZoYaQGzYhoGT2NHhY7C4yEwTeY5R4SQ5eUPG-4ACf8vw4F62LxlQoSZydM7xLSfuIGU-bQZaPmeR2dWNOPSYl826zWC4FkorVfHluYUI";
+		String authToken ="ovDE4wfUhwJ93tovGTAe5ccyvlPQ-DNd1JZ8ks64ZHkaSh5iR__O3hwSI7JLtWC5eWWCo6PKzFLmXK-AGq85IuuYJXHd2dI4IjxHH0gfX1bvmQiqxu3oZZFIUSRpXNRlHh76tBeEVmzet38Jidne2tNvcs6LR-wVvINXb-A7BD5AI-Ii2dgkt7mvsOZF2gFw3etCk50RodB_X7jFjg8PEEbT0WsdkHkwAsQTPkGqtiC1l_M6VSa5cQdk8w5oAboHZvrZHDn5tuQ4JqZ-JgyfZB2NVeCfmOt61HTVmcUuqOdprWXyqu7hMxq-SGkETCf_r9psEdWqzAdglm5RE7v-jgAk36H43Ke6_zguwrZekp9_ewqdAv7IngDW4HYEcIYRkDusuE3wtHkaHexwNbte5BM4tnep7SN-WezhxMp3qG2gKzXDbGtIiP4oyChk0va3nhH4vbnCpaXpU3AnxOODrH8XCxXzO6U6HL5SDfNaCUzlKN8wVgRwdDf6oZpIKAYRv2K8PO4uyo4mYoJMQzqz10cl_ZhzqQdd9AYv7UdJmU2rZpekNWje_QjEUSHLRaZa";
 		
 		Set<String> keySet = headers.keySet();
 		for(String key : keySet)
@@ -71,8 +71,8 @@ public class HelloController {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		/*httpHeaders.set("Accept", "application/json");
-		httpHeaders.set("Content-Type", "application/json");*/
+		httpHeaders.set("Accept", "application/json");
+		httpHeaders.set("Content-Type", "application/json");
 		httpHeaders.set("Authorization", "Bearer "+authToken);
 		httpHeaders.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
 
