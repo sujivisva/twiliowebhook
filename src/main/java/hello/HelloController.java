@@ -71,6 +71,8 @@ public class HelloController {
 		httpHeaders.set("Accept", "application/json");
 		httpHeaders.set("Content-Type", "application/json");
 		httpHeaders.set("Authorization", "Bearer "+authToken);
+		httpHeaders.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+
 		HttpEntity entity = new HttpEntity(startJobParameters, httpHeaders);
 		
 		String res = restTemplate.postForObject("https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs", entity, String.class);
