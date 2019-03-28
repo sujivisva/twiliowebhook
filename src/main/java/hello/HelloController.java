@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import hello.StartProcessDto.SourceEnum;
 
 @RestController
@@ -24,62 +27,58 @@ public class HelloController {
 		return "pinged";
 	}
 	
-	/*@RequestMapping("/getcheck")
-	public String getcheck() {
-		
-		RestTemplate restTemplate = new RestTemplate();
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("aaa", "111");
-		headers.set("bbb", "222");
-		headers.set("ccc", "333");
-		headers.set("Content-Type", "application/json");
-		HttpEntity entity = new HttpEntity("{\"input\" : \"calling from get\"}", headers);
-		
-		String res = restTemplate.postForObject("http://localhost:5000/rest/twiliowebhook/postcheck", entity, String.class);
-		System.out.println("Res from post call : "+res);
-		
-		return "getwelcome";
-	}*/
-	
 	@RequestMapping(value="/postcheck", method=RequestMethod.POST)
 	public void postcheck(@RequestBody String twilioBody, @RequestHeader HttpHeaders headers) 
 	{
-		String authToken ="ovDE4wfUhwJ93tovGTAe5ccyvlPQ-DNd1JZ8ks64ZHkaSh5iR__O3hwSI7JLtWC5eWWCo6PKzFLmXK-AGq85IuuYJXHd2dI4IjxHH0gfX1bvmQiqxu3oZZFIUSRpXNRlHh76tBeEVmzet38Jidne2tNvcs6LR-wVvINXb-A7BD5AI-Ii2dgkt7mvsOZF2gFw3etCk50RodB_X7jFjg8PEEbT0WsdkHkwAsQTPkGqtiC1l_M6VSa5cQdk8w5oAboHZvrZHDn5tuQ4JqZ-JgyfZB2NVeCfmOt61HTVmcUuqOdprWXyqu7hMxq-SGkETCf_r9psEdWqzAdglm5RE7v-jgAk36H43Ke6_zguwrZekp9_ewqdAv7IngDW4HYEcIYRkDusuE3wtHkaHexwNbte5BM4tnep7SN-WezhxMp3qG2gKzXDbGtIiP4oyChk0va3nhH4vbnCpaXpU3AnxOODrH8XCxXzO6U6HL5SDfNaCUzlKN8wVgRwdDf6oZpIKAYRv2K8PO4uyo4mYoJMQzqz10cl_ZhzqQdd9AYv7UdJmU2rZpekNWje_QjEUSHLRaZa";
-		
-		Set<String> keySet = headers.keySet();
-		for(String key : keySet)
-		{
-			System.out.println("Key : " + key + " Value : "+ headers.getOrDefault(key, null));
-		}
-		
-		System.out.println("twilioBody : " + twilioBody);
-		
-		RestTemplate restTemplate = new RestTemplate();
-		
-		StartProcessDto startInfo = new StartProcessDto();
-		startInfo.setReleaseKey("93b1f68b-d173-4558-81cf-4b51a4a80f39");
-		startInfo.setStrategy(StartProcessDto.StrategyEnum.SPECIFIC);
-		startInfo.setRobotIds(Arrays.asList(new Long(119722)));
-		startInfo.setJobsCount(0);
-		startInfo.setSource(SourceEnum.MANUAL);
-		startInfo.setInputArguments("{\"IncomingMessage\": \" Received SMS : "+ retriveSms(twilioBody)+"\"}");
-		
-		StartJobParameters startJobParameters = new StartJobParameters();
-		startJobParameters.setStartInfo(startInfo);
-		
-		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-		httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		httpHeaders.set("Accept", "application/json");
-		httpHeaders.set("Content-Type", "application/json");
-		httpHeaders.set("Authorization", "Bearer "+authToken);
-		httpHeaders.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+		try {
+			String authToken = "1VUJnbNhFXiqdFe-yVJ214kCb3uRiHxYl_XU7eXxbHY5fRr-MrdTi2LY2yT569fz6xpkD5R1LsGOdYylTBj5smpAwLHPkPxeas8dRvmZlDEL44ycSduxZXS9_6rWl6GfdfJfpyeGVRXMQDmxUlUhD5UpLabv6zsqJJ3UzLKSazUoKd5bz6chOr3EKYOtgKX5b3y2sEfZg-NHF9zc_-f2jHPn0Y8v8YAxFW9fuMgMADZgAZ6aN0LpiD3_Tr0u5jE7s6oAyJQ3RwsWXwbEfpzPRmvjmzBlnvtqIc2orAn7qyRghaY9A_r_La4m3NtHY-3_MkzYWYnY-AlVJUFp9ry01g-QQcgjIUIa2f0dr4pyqG-1sI6tP4-MpR3DsJ7dyFJRAwmEhzmddFOvFAramjm-XgauqFZZqf5umhLvWQbfN2e_Bp-FM14RjwPi-xm6bE95IPA9bo56nHNYnOBFDrfmTfPxXJq-PemCYy4ovkRVZYlgjL6bQ_V-4JGSMZyUPdEtUIY6HWdT9xdu8R1KiTB0w_6TVd4bVmy5okIsAf_HUvS4uksdpXn1s4KiPH7pwKOD";
 
-		HttpEntity entity = new HttpEntity(startJobParameters, httpHeaders);
-		
-		String res = restTemplate.postForObject("https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs", entity, String.class);
-		System.out.println("Res from post call : "+res);
+			Set<String> keySet = headers.keySet();
+			for (String key : keySet) {
+				System.out.println("Key : " + key + " Value : " + headers.getOrDefault(key, null));
+			}
+
+			System.out.println("twilioBody : " + twilioBody);
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			StartProcessDto startInfo = new StartProcessDto();
+			startInfo.setReleaseKey("93b1f68b-d173-4558-81cf-4b51a4a80f39");
+			startInfo.setStrategy(StartProcessDto.StrategyEnum.SPECIFIC);
+			startInfo.setRobotIds(Arrays.asList(new Long(119722)));
+			startInfo.setJobsCount(0);
+			startInfo.setSource(SourceEnum.MANUAL);
+			startInfo.setInputArguments("{\"IncomingMessage\": \" Received SMS : " + retriveSms(twilioBody) + "\"}");
+
+			StartJobParameters startJobParameters = new StartJobParameters();
+			startJobParameters.setStartInfo(startInfo);
+
+			HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+			httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+			
+			httpHeaders.set("Authorization", "Bearer " + authToken);
+			httpHeaders.add("user-agent",
+					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+
+			ObjectMapper mapper = new ObjectMapper();
+			mapper.setSerializationInclusion(Include.NON_NULL);
+			String bodyString = mapper.writeValueAsString(startJobParameters);
+
+			System.out.println(bodyString);
+
+			HttpEntity entity = new HttpEntity(bodyString, httpHeaders);
+
+			String res = restTemplate.postForObject(
+					"https://platform.uipath.com/odata/Jobs/UiPath.Server.Configuration.OData.StartJobs", entity,
+					String.class);
+			System.out.println("Res from post call : " + res);
+		} 
+		catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	/*public static void main(String[] args) {
@@ -121,5 +120,35 @@ public class HelloController {
 		System.out.println("smsBody : "+smsBody);
 		return smsBody;
 	}
+	
+	/*public static void main(String[] args) 
+	{
+		try {
+			HttpClient httpclient = HttpClients.createDefault();
+			HttpPost httppost = new HttpPost("http://www.a-domain.com/foo/");
+
+			// Request parameters and other properties.
+			List<NameValuePair> params = new ArrayList<NameValuePair>(2);
+			params.add(new BasicNameValuePair("param-1", "12345"));
+			params.add(new BasicNameValuePair("param-2", "Hello!"));
+			httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
+			//Execute and get the response.
+			HttpResponse response = httpclient.execute(httppost);
+			org.apache.http.HttpEntity entity = response.getEntity();
+			
+			
+			HttpClient httpclient = HttpClients.createDefault();
+			HttpGet httpGet = new HttpGet("https://twiliowebhooktest.herokuapp.com/rest/twiliowebhook/ping");
+
+			HttpResponse response = httpclient.execute(httpGet);
+			org.apache.http.HttpEntity entity = response.getEntity();
+			System.out.println(entity.toString());
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		} 
+	}*/
 
 }
