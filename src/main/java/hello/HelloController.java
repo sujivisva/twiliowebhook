@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,8 +69,10 @@ public class HelloController {
 		startJobParameters.setStartInfo(startInfo);
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.set("Accept", "application/json");
-		httpHeaders.set("Content-Type", "application/json");
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+		httpHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		/*httpHeaders.set("Accept", "application/json");
+		httpHeaders.set("Content-Type", "application/json");*/
 		httpHeaders.set("Authorization", "Bearer "+authToken);
 		httpHeaders.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
 
