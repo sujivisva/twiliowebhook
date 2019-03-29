@@ -39,7 +39,9 @@ public class HelloController {
 		
 		System.out.println("teamsBody : " + teamsBody);
 		
-		return i++ +"";
+		String reply = "{\"type\": \"message\", \"text\": \"This is my reply"+(i++)+"!\"}";
+		
+		return reply;
 	}
 	
 	@RequestMapping(value="/postcheck", method=RequestMethod.POST)
