@@ -21,10 +21,25 @@ import hello.StartProcessDto.SourceEnum;
 
 @RestController
 public class HelloController {
+	
+	private int i = 1;
 
 	@RequestMapping("/ping")
 	public String ping() {
 		return "pinged";
+	}
+	
+	@RequestMapping(value="/teamscheck", method=RequestMethod.POST)
+	public String teamscheck(@RequestBody String teamsBody, @RequestHeader HttpHeaders teamsHeaders) 
+	{
+		Set<String> keySet = teamsHeaders.keySet();
+		for (String key : keySet) {
+			System.out.println("Key : " + key + " Value : " + teamsHeaders.getOrDefault(key, null));
+		}
+		
+		System.out.println("teamsBody : " + teamsBody);
+		
+		return i++ +"";
 	}
 	
 	@RequestMapping(value="/postcheck", method=RequestMethod.POST)
