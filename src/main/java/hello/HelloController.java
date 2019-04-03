@@ -49,7 +49,7 @@ public class HelloController {
 	
 	@RequestMapping(value="/emailcheck", method=RequestMethod.POST, 
 			produces={"text/plain"})
-	public String emailcheck(@RequestBody String emailBody, @RequestHeader HttpHeaders emailHeaders, @RequestParam Map<String,String> queryParams) 
+	public String emailcheck(/*@RequestBody String emailBody, */@RequestHeader HttpHeaders emailHeaders, @RequestParam Map<String,String> queryParams) 
 	{
 		try 
 		{
@@ -58,7 +58,7 @@ public class HelloController {
 				System.out.println("Key : " + key + " Value : " + emailHeaders.getOrDefault(key, null));
 			}
 			
-			System.out.println("emailBody : " + emailBody);
+			/*System.out.println("emailBody : " + emailBody);*/
 			
 			String validationToken = queryParams.get("validationToken");
 			System.out.println("validationToken : "+validationToken);
