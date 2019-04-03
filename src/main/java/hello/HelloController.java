@@ -60,6 +60,7 @@ public class HelloController {
 		System.out.println("emailBody : " + emailBody);
 		
 		String validationToken = queryParams.get("validationToken");
+		System.out.println("validationToken : "+validationToken);
 		if(validationToken != null && validationToken.trim().length() > 0)
 		{
 			//validationToken = URLDecoder.decode(validationToken);
