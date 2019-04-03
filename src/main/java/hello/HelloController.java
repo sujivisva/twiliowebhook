@@ -47,9 +47,9 @@ public class HelloController {
 		return reply;
 	}
 	
-	@RequestMapping(value="/emailcheck", method=RequestMethod.POST, 
+	/*@RequestMapping(value="/emailcheck", method=RequestMethod.POST, 
 			produces={"text/plain"})
-	public String emailcheck(/*@RequestBody String emailBody, */@RequestHeader HttpHeaders emailHeaders, @RequestParam Map<String,String> queryParams) 
+	public String emailcheck(@RequestBody String emailBody, @RequestHeader HttpHeaders emailHeaders, @RequestParam Map<String,String> queryParams) 
 	{
 		try 
 		{
@@ -58,19 +58,44 @@ public class HelloController {
 				System.out.println("Key : " + key + " Value : " + emailHeaders.getOrDefault(key, null));
 			}
 			
-			/*System.out.println("emailBody : " + emailBody);*/
+			System.out.println("emailBody : " + emailBody);
 			
 			String validationToken = queryParams.get("validationToken");
 			System.out.println("validationToken : "+validationToken);
 			if(validationToken != null && validationToken.trim().length() > 0)
 			{
-				//validationToken = URLDecoder.decode(validationToken);
-				/*validationToken = validationToken.replaceAll("Validation: Testing client application reachability for subscription Request-Id: ", "");*/
 				return validationToken;
 			}
 			else
 			{
 				return validationToken;			
+			}
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return "";
+	}*/
+	
+	@RequestMapping(value="/emailcheck", method=RequestMethod.POST, 
+			produces={"text/plain"})
+	public String emailcheck(@RequestBody String emailBody, @RequestHeader HttpHeaders emailHeaders, @RequestParam Map<String,String> queryParams) 
+	{
+		try 
+		{
+			Set<String> keySet = emailHeaders.keySet();
+			for (String key : keySet) {
+				System.out.println("Key : " + key + " Value : " + emailHeaders.getOrDefault(key, null));
+			}
+			
+			System.out.println("emailBody : " + emailBody);
+			
+			Set<String> set = queryParams.keySet();
+			for(String key : set)
+			{
+				System.out.println("key : "+ key + " value : "+queryParams.get(key));
 			}
 		} 
 		catch (Exception e) 
