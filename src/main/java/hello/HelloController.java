@@ -63,7 +63,7 @@ public class HelloController {
 		if(validationToken != null && validationToken.trim().length() > 0)
 		{
 			validationToken = URLDecoder.decode(validationToken);
-			validationToken = validationToken.replaceAll("Validation: Testing client application reachability for subscription Request-Id: ", "");
+			/*validationToken = validationToken.replaceAll("Validation: Testing client application reachability for subscription Request-Id: ", "");*/
 			return validationToken;
 		}
 		else
