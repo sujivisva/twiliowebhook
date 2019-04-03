@@ -2,6 +2,8 @@ package hello;
 
 import java.net.URLDecoder;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.http.HttpEntity;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -42,6 +45,35 @@ public class HelloController {
 		String reply = "{\"type\": \"message\", \"text\": \"This is my reply"+(i++)+"!\"}";
 		
 		return reply;
+	}
+	
+	@RequestMapping(value="/emailcheck", method=RequestMethod.POST)
+	public String emailcheck(@RequestBody String emailBody, @RequestHeader HttpHeaders emailHeaders) 
+	{
+		Set<String> keySet = emailHeaders.keySet();
+		for (String key : keySet) {
+			System.out.println("Key : " + key + " Value : " + emailHeaders.getOrDefault(key, null));
+		}
+		
+		System.out.println("emailBody : " + emailBody);
+		
+		String reply = "{\"type\": \"message\", \"text\": \"This is my reply"+(i++)+"!\"}";
+		
+		return reply;
+	}
+	
+	@RequestMapping(value="/emailauthcheck", method=RequestMethod.GET)
+	public void emailauthcheck(@RequestHeader HttpHeaders httpHeaders, @RequestParam Map<String,String> queryParams) 
+	{
+		Set<String> keySet = httpHeaders.keySet();
+		for (String key : keySet) {
+			System.out.println("Key : " + key + " Value : " + httpHeaders.getOrDefault(key, null));
+		}
+		
+		keySet = queryParams.keySet();
+		for (String key : keySet) {
+			System.out.println("QKey : " + key + " QValue : " + queryParams.getOrDefault(key, null));
+		}
 	}
 	
 	@RequestMapping(value="/postcheck", method=RequestMethod.POST)
