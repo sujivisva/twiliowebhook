@@ -48,8 +48,7 @@ public class HelloController {
 	}
 	
 	@RequestMapping(value="/emailcheck", method=RequestMethod.POST, 
-			produces={"text/plain"},
-			consumes={"application/json"})
+			produces={"text/plain"})
 	public String emailcheck(@RequestBody String emailBody, @RequestHeader HttpHeaders emailHeaders, @RequestParam Map<String,String> queryParams) 
 	{
 		try 
