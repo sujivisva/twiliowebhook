@@ -81,8 +81,9 @@ public class HelloController {
 	
 	@RequestMapping(value="/emailcheck", method=RequestMethod.POST, 
 			produces={"text/plain"})
-	public String emailcheck(@RequestBody String emailBody, @RequestHeader HttpHeaders emailHeaders, @RequestParam Map<String,String> queryParams) 
+	public String emailcheck(@RequestBody(required=false) String emailBody, @RequestHeader HttpHeaders emailHeaders, @RequestParam Map<String,String> queryParams) 
 	{
+		String validationToken = "";
 		try 
 		{
 			Set<String> keySet = emailHeaders.keySet();
@@ -96,6 +97,10 @@ public class HelloController {
 			for(String key : set)
 			{
 				System.out.println("key : "+ key + " value : "+queryParams.get(key));
+				if(key.equals("validationToken"))
+				{
+					validationToken = queryParams.get(key);
+				}
 			}
 		} 
 		catch (Exception e) 
@@ -103,7 +108,7 @@ public class HelloController {
 			e.printStackTrace();
 		}
 		
-		return "";
+		return validationToken;
 	}
 	
 	@RequestMapping(value="/emailauthcheck", method=RequestMethod.GET)
